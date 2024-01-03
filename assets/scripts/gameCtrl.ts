@@ -1,4 +1,5 @@
 import { _decorator, Component, Node } from 'cc'
+import { Ground } from './Ground'
 const { ccclass, property } = _decorator
 
 enum EFailType {
@@ -6,8 +7,8 @@ enum EFailType {
   GROUND,
 }
 
-@ccclass('gameCtrl')
-export class gameCtrl extends Component {
+@ccclass('GameCtrl')
+export class GameCtrl extends Component {
   @property({
     type: Node,
     displayName: 'startScreen',
@@ -15,19 +16,19 @@ export class gameCtrl extends Component {
   private startScreen: Node = null
 
   @property({
-    type: Node,
+    type: Ground,
     displayName: 'ground',
   })
-  private ground: Node = null
+  private ground: Ground = null
 
   start() {}
 
   update(deltaTime: number) {}
 
   handleStart() {
-    console.log('🚀 ~ gameCtrl ~ handleStart')
+    console.log('handleStart')
     this.startScreen.active = false
-    this.ground.getComponent('ground').startScroll()
+    this.ground.startScroll()
 
     setTimeout(() => {
       this.handleFail(EFailType.GROUND)
@@ -35,8 +36,8 @@ export class gameCtrl extends Component {
   }
 
   handleFail(failType: EFailType) {
-    console.log('🚀 ~ gameCtrl ~ handleFail')
+    console.log('handleFail')
     this.startScreen.active = true
-    this.ground.getComponent('ground').stopScroll()
+    this.ground.stopScroll()
   }
 }

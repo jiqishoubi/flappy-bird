@@ -1,8 +1,8 @@
 import { _decorator, Component, Node, Sprite } from 'cc'
 const { ccclass, property } = _decorator
 
-@ccclass('pipe')
-export class pipe extends Component {
+@ccclass('Pipe')
+export class Pipe extends Component {
   @property({
     type: Sprite,
     displayName: 'topPipe',
