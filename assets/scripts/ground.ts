@@ -3,11 +3,17 @@ const { ccclass, property } = _decorator
 
 @ccclass('Ground')
 export class Ground extends Component {
+  private _isScrolling = false
+
   start() {}
 
-  update(deltaTime: number) {}
+  update(deltaTime: number) {
+    if (this._isScrolling) {
+      this.scroll()
+    }
+  }
 
-  startScroll() {
+  scroll() {
     const start = -380
     const rawWidth = 336
     let newX = this.node.position.x - 2
@@ -17,7 +23,11 @@ export class Ground extends Component {
     this.node.setPosition(newX, this.node.position.y, this.node.position.z)
   }
 
+  startScroll() {
+    this._isScrolling = true
+  }
+
   stopScroll() {
-    this.node.setPosition(this.node.position.x, this.node.position.y, this.node.position.z)
+    this._isScrolling = false
   }
 }
