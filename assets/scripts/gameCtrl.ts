@@ -14,6 +14,12 @@ export class gameCtrl extends Component {
   })
   private startScreen: Node = null
 
+  @property({
+    type: Node,
+    displayName: 'ground',
+  })
+  private ground: Node = null
+
   start() {}
 
   update(deltaTime: number) {}
@@ -21,6 +27,7 @@ export class gameCtrl extends Component {
   handleStart() {
     console.log('🚀 ~ gameCtrl ~ handleStart')
     this.startScreen.active = false
+    this.ground.getComponent('ground').startScroll()
 
     setTimeout(() => {
       this.handleFail(EFailType.GROUND)
@@ -30,5 +37,6 @@ export class gameCtrl extends Component {
   handleFail(failType: EFailType) {
     console.log('🚀 ~ gameCtrl ~ handleFail')
     this.startScreen.active = true
+    this.ground.getComponent('ground').stopScroll()
   }
 }

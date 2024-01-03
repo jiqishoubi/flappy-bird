@@ -9,7 +9,8 @@ export class ground extends Component {
 
   update(deltaTime: number) {}
 
-  scroll() {
+  startScroll() {
+    console.log('🚀 ~ ground startScroll')
     const start = -380
     const rawWidth = 336
     let newX = this.node.position.x - 2
@@ -17,5 +18,10 @@ export class ground extends Component {
       newX = newX + rawWidth
     }
     this.node.setPosition(newX, this.node.position.y, this.node.position.z)
+  }
+
+  stopScroll() {
+    console.log('🚀 ~ ground stopScroll')
+    this.node.setPosition(this.node.position.x, this.node.position.y, this.node.position.z)
   }
 }
