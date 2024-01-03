@@ -5,13 +5,13 @@ const { ccclass, property } = _decorator
 export class pipe extends Component {
   @property({
     type: Sprite,
-    displayName: '上管道',
+    displayName: 'topPipe',
   })
   private topPipe: Sprite = null
 
   @property({
     type: Sprite,
-    displayName: '下管道',
+    displayName: 'bottomPipe',
   })
   private bottomPipe: Sprite = null
 

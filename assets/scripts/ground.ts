@@ -7,7 +7,9 @@ export class ground extends Component {
     console.log('🚀 ~ ground start')
   }
 
-  update(deltaTime: number) {
+  update(deltaTime: number) {}
+
+  scroll() {
     const start = -380
     const rawWidth = 336
     let newX = this.node.position.x - 2
