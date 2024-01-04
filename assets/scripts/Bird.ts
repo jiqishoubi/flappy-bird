@@ -26,6 +26,20 @@ export class Bird extends Component {
 
   stopGame() {
     this.isStart = false
+  }
+
+  get bottomY() {
+    // @ts-ignore
+    return this.node.position.y - this.node.height / 2
+  }
+
+  setBottomY(y: number) {
+    // @ts-ignore
+    this.node.setPosition(this.node.position.x, y + this.node.height / 2, this.node.position.z)
+  }
+
+  resetBird() {
+    this.vy = 0
     this.node.setPosition(0, 0, 0)
   }
 }

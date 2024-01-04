@@ -1,6 +1,8 @@
 import { _decorator, Component, Node } from 'cc'
 import { Ground } from './Ground'
 import { Bird } from './Bird'
+import { StartScreen } from './StartScreen'
+import { EndScreen } from './EndScreen'
 const { ccclass, property } = _decorator
 
 enum EFailType {
@@ -10,11 +12,19 @@ enum EFailType {
 
 @ccclass('GameCtrl')
 export class GameCtrl extends Component {
+  private isGameOver = false
+
   @property({
-    type: Node,
+    type: StartScreen,
     displayName: 'startScreen',
   })
-  private startScreen: Node = null
+  private startScreen: StartScreen = null
+
+  @property({
+    type: EndScreen,
+    displayName: 'endScreen',
+  })
+  private endScreen: EndScreen = null
 
   @property({
     type: Ground,
@@ -30,23 +40,34 @@ export class GameCtrl extends Component {
 
   start() {}
 
-  update(deltaTime: number) {}
+  update(deltaTime: number) {
+    if (!this.isGameOver) {
+      // 如果鸟的位置小于地面的位置，那么游戏结束
+      if (this.bird.bottomY < this.ground.node.position.y) {
+        this.bird.setBottomY(this.ground.node.position.y)
+        this.handleFail(EFailType.GROUND)
+      }
+    }
+  }
 
   handleStart() {
     console.log('handleStart')
-    this.startScreen.active = false
+    this.isGameOver = false
+    this.startScreen.hide()
     this.ground.startScroll()
     this.bird.startGame()
-
-    setTimeout(() => {
-      this.handleFail(EFailType.GROUND)
-    }, 2000)
   }
 
   handleFail(failType: EFailType) {
     console.log('handleFail')
-    this.startScreen.active = true
+    this.isGameOver = true
     this.ground.stopScroll()
-    this.bird.stopGame()  
+    this.bird.stopGame()
+    this.endScreen.show({
+      onRestart: () => {
+        this.startScreen.show()
+        this.bird.resetBird()
+      },
+    })
   }
 }
