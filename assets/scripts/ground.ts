@@ -3,12 +3,12 @@ const { ccclass, property } = _decorator
 
 @ccclass('Ground')
 export class Ground extends Component {
-  private _isScrolling = false
+  private isScrolling = false
 
   start() {}
 
   update(deltaTime: number) {
-    if (this._isScrolling) {
+    if (this.isScrolling) {
       this.scroll()
     }
   }
@@ -24,10 +24,10 @@ export class Ground extends Component {
   }
 
   startScroll() {
-    this._isScrolling = true
+    this.isScrolling = true
   }
 
   stopScroll() {
-    this._isScrolling = false
+    this.isScrolling = false
   }
 }
