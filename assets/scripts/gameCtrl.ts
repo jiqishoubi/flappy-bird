@@ -3,6 +3,7 @@ import { Ground } from './Ground'
 import { Bird } from './Bird'
 import { StartScreen } from './StartScreen'
 import { EndScreen } from './EndScreen'
+import { UIClass, UIMgr } from './lib/UIMgr'
 const { ccclass, property } = _decorator
 
 enum EFailType {
@@ -19,12 +20,6 @@ export class GameCtrl extends Component {
     displayName: 'startScreen',
   })
   private startScreen: StartScreen = null
-
-  @property({
-    type: EndScreen,
-    displayName: 'endScreen',
-  })
-  private endScreen: EndScreen = null
 
   @property({
     type: Ground,
@@ -63,7 +58,7 @@ export class GameCtrl extends Component {
     this.isGameOver = true
     this.ground.stopScroll()
     this.bird.stopGame()
-    this.endScreen.show({
+    UIMgr.instance.open(EndScreen as any , {
       onRestart: () => {
         this.startScreen.show()
         this.bird.resetBird()

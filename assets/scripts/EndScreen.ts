@@ -1,9 +1,16 @@
 import { _decorator, Component, Node } from 'cc'
+import { UIClass } from './lib/UIMgr'
 const { ccclass, property } = _decorator
 
 @ccclass('EndScreen')
-export class EndScreen extends Component {
-  private onRestart: () => void = null
+export class EndScreen extends UIClass {
+  static readonly bundleName = 'prefabBundle'
+  static readonly prefabPath = 'endScreen'
+  static readonly scriptName = 'EndScreen'
+
+  private payload: {
+    onRestart: () => void
+  }
 
   start() {
     this.node.active = false
@@ -11,19 +18,18 @@ export class EndScreen extends Component {
 
   update(deltaTime: number) {}
 
-  show(params: { onRestart: () => void }) {
+  open = (payload) => {
+    console.log('🚀 ~ 打开 end')
     this.node.active = true
-    if (params?.onRestart) {
-      this.onRestart = params.onRestart
-    }
+    this.payload = payload
   }
 
-  hide() {
+  close() {
     this.node.active = false
   }
 
   handleRestart() {
-    this.hide()
-    this.onRestart?.()
+    this.close()
+    this.payload?.onRestart()
   }
 }
