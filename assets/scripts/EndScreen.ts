@@ -12,19 +12,16 @@ export class EndScreen extends UIClass {
     onRestart: () => void
   }
 
-  start() {
-    this.node.active = false
-  }
+  start() {}
 
   update(deltaTime: number) {}
 
   open = (payload) => {
-    console.log('🚀 ~ 打开 end')
     this.node.active = true
     this.payload = payload
   }
 
-  close() {
+  close = () => {
     this.node.active = false
   }
 

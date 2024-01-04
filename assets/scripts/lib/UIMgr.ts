@@ -13,6 +13,7 @@ export class UIClass extends Component {
   readonly prefabPath: string
   readonly scriptName: string
   open: (payload?: any) => void
+  close: () => void
 }
 
 @ccclass('UIMgr')
@@ -33,10 +34,15 @@ export class UIMgr extends Component {
     assetManager.loadBundle(uiClass.bundleName, (err, bundle) => {
       bundle.load(uiClass.prefabPath, (err, prefab) => {
         const node = instantiate(prefab) as any
+        console.log(`🚀 ~ node:`, node)
         this.node.addChild(node)
         const nodeScript = node.getComponent(uiClass.scriptName)
         nodeScript.open(payload)
       })
     })
+  }
+
+  close(uiClass: any) {
+    uiClass.node.close()
   }
 }
