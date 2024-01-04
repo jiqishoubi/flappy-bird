@@ -1,11 +1,13 @@
 import { _decorator, Component, Node } from 'cc'
 const { ccclass, property } = _decorator
 
+const birdDefaultPosition = [0, 50, 0]
+
 @ccclass('Bird')
 export class Bird extends Component {
   private isStart = false
   // 重力
-  private gravity = -9.8 * 80
+  private gravity = -9.8 * 130
   private vy = 0 // 初速度
 
   start() {}
@@ -40,6 +42,7 @@ export class Bird extends Component {
 
   resetBird() {
     this.vy = 0
-    this.node.setPosition(0, 0, 0)
+    // @ts-ignore
+    this.node.setPosition(...birdDefaultPosition)
   }
 }

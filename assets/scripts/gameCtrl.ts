@@ -58,11 +58,15 @@ export class GameCtrl extends Component {
     this.isGameOver = true
     this.ground.stopScroll()
     this.bird.stopGame()
-    UIMgr.instance.open(EndScreen as any , {
+    UIMgr.instance.open(EndScreen as any, {
       onRestart: () => {
-        this.startScreen.show()
-        this.bird.resetBird()
+        this.resetGame()
       },
     })
+  }
+
+  resetGame() {
+    this.startScreen.show()
+    this.bird.resetBird()
   }
 }
