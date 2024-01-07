@@ -1,6 +1,7 @@
-import { _decorator, Component, Node } from 'cc'
+import { _decorator, Component, Node, Rect, UITransform } from 'cc'
 import { GlobalData } from './GlobalData'
 import { scrollSpeed } from './utils'
+import { Bird } from './Bird'
 const { ccclass, property } = _decorator
 
 @ccclass('Ground')
@@ -21,5 +22,14 @@ export class Ground extends Component {
       newX = newX + rawWidth
     }
     this.node.setPosition(newX, this.node.position.y, this.node.position.z)
+  }
+
+  collisionCheck(bird: Bird) {
+    // 如果鸟的位置小于地面的位置，那么游戏结束
+    if (bird.bottomY < this.node.position.y) {
+      bird.setBottomY(this.node.position.y)
+      return true
+    }
+    return false
   }
 }

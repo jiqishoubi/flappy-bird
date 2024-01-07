@@ -52,10 +52,12 @@ export class GameCtrl extends Component {
 
   update(deltaTime: number) {
     if (GlobalData.isStart) {
-      // 如果鸟的位置小于地面的位置，那么游戏结束
-      if (this.bird.bottomY < this.ground.node.position.y) {
-        this.bird.setBottomY(this.ground.node.position.y)
+      // 碰撞检测
+      if (this.ground.collisionCheck(this.bird)) {
         this.handleFail(EFailType.GROUND)
+      }
+      if (this.pipeMgr.collisionCheck(this.bird)) {
+        this.handleFail(EFailType.PIPE)
       }
     }
   }
@@ -79,7 +81,8 @@ export class GameCtrl extends Component {
 
   resetGame() {
     this.startScreen.show()
-    this.bird.resetBird()
+    this.bird.reset()
+    this.pipeMgr.reset()
   }
 
   bindEvents() {

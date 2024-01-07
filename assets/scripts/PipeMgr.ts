@@ -1,6 +1,7 @@
-import { _decorator, Component, instantiate, Node, Prefab } from 'cc'
+import { _decorator, Component, instantiate, Node, Prefab, Rect, UITransform } from 'cc'
 import { GlobalData } from './GlobalData'
 import { Pipe } from './Pipe'
+import { Bird } from './Bird'
 const { ccclass, property } = _decorator
 
 const fisrtGap = 350
@@ -52,5 +53,20 @@ export class PipeMgr extends Component {
       pipeComponent.setRandomY()
       this.pipeList.push(pipeComponent)
     }
+  }
+
+  collisionCheck(bird: any) {
+    for (let i = 0; i < this.pipeList.length; i++) {
+      const pipe = this.pipeList[i]
+      if (pipe.collisionCheck(bird)) {
+        return true
+      }
+    }
+    return false
+  }
+
+  reset() {
+    this.pipeList = []
+    this.node.removeAllChildren()
   }
 }
