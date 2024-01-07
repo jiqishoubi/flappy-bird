@@ -13,13 +13,13 @@ export class Bird extends Component {
   start() {}
 
   update(deltaTime: number) {
-    if (GlobalData.isStart) {
-      // 下落
-      this.vy = this.vy + this.gravity * deltaTime
-      const dy = this.vy * deltaTime
-      const newY = this.node.position.y + dy
-      this.node.setPosition(this.node.position.x, newY, this.node.position.z)
-    }
+    // if (GlobalData.isStart) {
+    //   // 下落
+    //   this.vy = this.vy + this.gravity * deltaTime
+    //   const dy = this.vy * deltaTime
+    //   const newY = this.node.position.y + dy
+    //   this.node.setPosition(this.node.position.x, newY, this.node.position.z)
+    // }
   }
 
   get bottomY() {

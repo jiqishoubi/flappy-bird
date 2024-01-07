@@ -57,6 +57,7 @@ export class GameCtrl extends Component {
     console.log('handleStart')
     GlobalData.isStart = true
     this.startScreen.hide()
+    this.pipeMgr.generatePipe()
   }
 
   handleFail(failType: EFailType) {
