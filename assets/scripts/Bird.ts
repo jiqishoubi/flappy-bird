@@ -7,7 +7,7 @@ const birdDefaultPosition = [0, 50, 0]
 export class Bird extends Component {
   private isStart = false
   // 重力
-  private gravity = -9.8 * 130
+  private gravity = -9.8 * 180
   private vy = 0 // 初速度
 
   start() {}
@@ -44,5 +44,9 @@ export class Bird extends Component {
     this.vy = 0
     // @ts-ignore
     this.node.setPosition(...birdDefaultPosition)
+  }
+
+  flyUp(){
+    this.vy = 700
   }
 }

@@ -33,7 +33,9 @@ export class GameCtrl extends Component {
   })
   private bird: Bird = null
 
-  start() {}
+  start() {
+    this.bindEvents()
+  }
 
   update(deltaTime: number) {
     if (!this.isGameOver) {
@@ -68,5 +70,14 @@ export class GameCtrl extends Component {
   resetGame() {
     this.startScreen.show()
     this.bird.resetBird()
+  }
+
+  bindEvents(){
+    // 点击
+    this.node.on(Node.EventType.TOUCH_START, () => {
+      if (!this.isGameOver) {
+        this.bird.flyUp()
+      }
+    })
   }
 }
