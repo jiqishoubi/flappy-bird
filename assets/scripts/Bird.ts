@@ -1,11 +1,11 @@
 import { _decorator, Component, Node } from 'cc'
+import { GlobalData } from './GlobalData'
 const { ccclass, property } = _decorator
 
 const birdDefaultPosition = [0, 50, 0]
 
 @ccclass('Bird')
 export class Bird extends Component {
-  private isStart = false
   // 重力
   private gravity = -9.8 * 180
   private vy = 0 // 初速度
@@ -13,21 +13,13 @@ export class Bird extends Component {
   start() {}
 
   update(deltaTime: number) {
-    if (this.isStart) {
+    if (GlobalData.isStart) {
       // 下落
       this.vy = this.vy + this.gravity * deltaTime
       const dy = this.vy * deltaTime
       const newY = this.node.position.y + dy
       this.node.setPosition(this.node.position.x, newY, this.node.position.z)
     }
-  }
-
-  startGame() {
-    this.isStart = true
-  }
-
-  stopGame() {
-    this.isStart = false
   }
 
   get bottomY() {
@@ -46,7 +38,7 @@ export class Bird extends Component {
     this.node.setPosition(...birdDefaultPosition)
   }
 
-  flyUp(){
+  flyUp() {
     this.vy = 700
   }
 }

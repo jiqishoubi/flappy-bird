@@ -4,6 +4,8 @@ import { Bird } from './Bird'
 import { StartScreen } from './StartScreen'
 import { EndScreen } from './EndScreen'
 import { UIClass, UIMgr } from './lib/UIMgr'
+import { PipeMgr } from './PipeMgr'
+import { GlobalData } from './GlobalData'
 const { ccclass, property } = _decorator
 
 enum EFailType {
@@ -13,8 +15,6 @@ enum EFailType {
 
 @ccclass('GameCtrl')
 export class GameCtrl extends Component {
-  private isGameOver = false
-
   @property({
     type: StartScreen,
     displayName: 'startScreen',
@@ -33,12 +33,18 @@ export class GameCtrl extends Component {
   })
   private bird: Bird = null
 
+  @property({
+    type: PipeMgr,
+    displayName: 'pipeMgr',
+  })
+  private pipeMgr: PipeMgr = null
+
   start() {
     this.bindEvents()
   }
 
   update(deltaTime: number) {
-    if (!this.isGameOver) {
+    if (GlobalData.isStart) {
       // 如果鸟的位置小于地面的位置，那么游戏结束
       if (this.bird.bottomY < this.ground.node.position.y) {
         this.bird.setBottomY(this.ground.node.position.y)
@@ -49,17 +55,13 @@ export class GameCtrl extends Component {
 
   handleStart() {
     console.log('handleStart')
-    this.isGameOver = false
+    GlobalData.isStart = true
     this.startScreen.hide()
-    this.ground.startScroll()
-    this.bird.startGame()
   }
 
   handleFail(failType: EFailType) {
     console.log('handleFail')
-    this.isGameOver = true
-    this.ground.stopScroll()
-    this.bird.stopGame()
+    GlobalData.isStart = false
     UIMgr.instance.open(EndScreen as any, {
       onRestart: () => {
         this.resetGame()
@@ -72,10 +74,10 @@ export class GameCtrl extends Component {
     this.bird.resetBird()
   }
 
-  bindEvents(){
+  bindEvents() {
     // 点击
     this.node.on(Node.EventType.TOUCH_START, () => {
-      if (!this.isGameOver) {
+      if (GlobalData.isStart) {
         this.bird.flyUp()
       }
     })
