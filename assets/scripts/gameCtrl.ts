@@ -37,13 +37,13 @@ export class GameCtrl extends Component {
     type: Bird,
     displayName: 'bird',
   })
-  private bird: Bird = null
+  bird: Bird = null
 
   @property({
     type: PipeMgr,
     displayName: 'pipeMgr',
   })
-  private pipeMgr: PipeMgr = null
+  pipeMgr: PipeMgr = null
 
   start() {
     GameCtrl._instance = this

@@ -34,6 +34,7 @@ export class PipeMgr extends Component {
           const newX = this.pipeList[this.pipeList.length - 2].node.position.x + pipePadding
           firstPipe.node.setPosition(newX, firstPipe.node.position.y, 0)
           firstPipe.setRandomY()
+          firstPipe.setScored(false)
         }
       }
     }

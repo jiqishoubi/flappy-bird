@@ -21,11 +21,19 @@ export class Pipe extends Component {
   })
   private bottomPipe: Sprite = null
 
+  private scored = false
+
   start() {}
 
   update(deltaTime: number) {
     if (GlobalData.isStart) {
       this.scroll()
+
+      // 得分
+      if (!this.scored && this.node.position.x + this.node.width / 2 < 0 - GameCtrl.instance.bird.node.width / 2) {
+        this.scored = true
+        GlobalData.addScore()
+      }
     }
   }
 
@@ -37,8 +45,8 @@ export class Pipe extends Component {
   setRandomY() {
     const _minY = GameCtrl.instance.ground.node.position.y
     // @ts-ignore
-    const _maxY = GameCtrl.instance.node.height / 2 - 140
-    const _gap = pipeGap / 2 + 50
+    const _maxY = GameCtrl.instance.node.height / 2 - 200 // 最大高度
+    const _gap = pipeGap / 2 + 100
 
     const minY = _minY + _gap
     const maxY = _maxY - _gap
@@ -82,5 +90,9 @@ export class Pipe extends Component {
     }
 
     return false
+  }
+
+  setScored(scored: boolean) {
+    this.scored = scored
   }
 }
