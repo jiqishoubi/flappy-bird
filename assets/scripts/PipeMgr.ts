@@ -1,9 +1,11 @@
 import { _decorator, Component, instantiate, Node, Prefab } from 'cc'
 import { GlobalData } from './GlobalData'
-import { scrollSpeed } from './utils'
+import { Pipe } from './Pipe'
 const { ccclass, property } = _decorator
 
+const fisrtGap = 350
 const pipePadding = 400
+const pipeWidth = 120
 
 @ccclass('PipeMgr')
 export class PipeMgr extends Component {
@@ -13,22 +15,30 @@ export class PipeMgr extends Component {
   })
   private pipePrefab: Prefab = null
 
+  private pipeList: Pipe[] = []
+
   start() {}
 
   update(deltaTime: number) {
     if (GlobalData.isStart) {
-      this.scroll()
-    }
-  }
+      const firstPipe = this.pipeList[0]
+      if (firstPipe) {
+        // 如果第一个管道的位置小于屏幕左边界，那么就删除第一个管道
+        // @ts-ignore
+        if (firstPipe.node.position.x + pipeWidth / 2 < -this.node.parent.width / 2) {
+          this.pipeList.shift()
+          this.pipeList.push(firstPipe)
 
-  scroll() {
-    let newX = this.node.position.x - scrollSpeed
-    this.node.setPosition(newX, this.node.position.y, this.node.position.z)
+          // 重新设置位置
+          const newX = this.pipeList[this.pipeList.length - 2].node.position.x + pipePadding
+          firstPipe.node.setPosition(newX, 0, 0)
+        }
+      }
+    }
   }
 
   // 生成管道
   generatePipe() {
-    const fisrtGap = 350
     // 获取屏幕宽度
     // @ts-ignore
     const screenWidth = this.node.parent.width
@@ -37,6 +47,8 @@ export class PipeMgr extends Component {
       const pipe = instantiate(this.pipePrefab)
       pipe.setPosition(i * pipePadding + fisrtGap, 0, 0)
       this.node.addChild(pipe)
+      const pipeComponent = pipe.getComponent(Pipe)
+      this.pipeList.push(pipeComponent)
     }
   }
 }
