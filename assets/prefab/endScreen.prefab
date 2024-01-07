@@ -453,7 +453,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 220.078125,
+      "width": 186.708984375,
       "height": 75.6
     },
     "_anchorPoint": {
@@ -489,7 +489,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "得分: 10",
+    "_string": "得分: 0",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 60,
@@ -1038,6 +1038,9 @@
     "__prefab": {
       "__id__": 46
     },
+    "score": {
+      "__id__": 16
+    },
     "_id": ""
   },
   {
@@ -1053,6 +1056,7 @@
       "__id__": 0
     },
     "fileId": "aenA+nuqVHGLaVHKQhRbIK",
+    "instance": null,
     "targetOverrides": null
   }
 ]
