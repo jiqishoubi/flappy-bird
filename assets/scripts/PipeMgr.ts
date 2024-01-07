@@ -4,7 +4,7 @@ import { Pipe } from './Pipe'
 const { ccclass, property } = _decorator
 
 const fisrtGap = 350
-const pipePadding = 400
+const pipePadding = 450
 const pipeWidth = 120
 
 @ccclass('PipeMgr')
@@ -31,7 +31,8 @@ export class PipeMgr extends Component {
 
           // 重新设置位置
           const newX = this.pipeList[this.pipeList.length - 2].node.position.x + pipePadding
-          firstPipe.node.setPosition(newX, 0, 0)
+          firstPipe.node.setPosition(newX, firstPipe.node.position.y, 0)
+          firstPipe.setRandomY()
         }
       }
     }
@@ -48,6 +49,7 @@ export class PipeMgr extends Component {
       pipe.setPosition(i * pipePadding + fisrtGap, 0, 0)
       this.node.addChild(pipe)
       const pipeComponent = pipe.getComponent(Pipe)
+      pipeComponent.setRandomY()
       this.pipeList.push(pipeComponent)
     }
   }

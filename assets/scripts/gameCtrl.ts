@@ -15,17 +15,23 @@ enum EFailType {
 
 @ccclass('GameCtrl')
 export class GameCtrl extends Component {
+  private static _instance: GameCtrl = null
+
+  public static get instance() {
+    return GameCtrl._instance
+  }
+
   @property({
     type: StartScreen,
     displayName: 'startScreen',
   })
-  private startScreen: StartScreen = null
+  startScreen: StartScreen = null
 
   @property({
     type: Ground,
     displayName: 'ground',
   })
-  private ground: Ground = null
+  ground: Ground = null
 
   @property({
     type: Bird,
@@ -40,6 +46,7 @@ export class GameCtrl extends Component {
   private pipeMgr: PipeMgr = null
 
   start() {
+    GameCtrl._instance = this
     this.bindEvents()
   }
 
