@@ -1,5 +1,6 @@
 import { _decorator, Component, Node } from 'cc'
-import { GlobalData } from './GlobalData'
+import { AudioData, GlobalData } from './GlobalData'
+import { AudioMgr } from './AudioMgr'
 const { ccclass, property } = _decorator
 
 const birdDefaultPosition = [0, 50, 0]
@@ -41,5 +42,6 @@ export class Bird extends Component {
   // 上升 跳跃
   flyUp() {
     this.vy = 550
+    AudioMgr.instance.playOneShot(AudioData.swoosh)
   }
 }

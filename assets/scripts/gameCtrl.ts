@@ -5,7 +5,8 @@ import { StartScreen } from './StartScreen'
 import { EndScreen } from './EndScreen'
 import { UIClass, UIMgr } from './lib/UIMgr'
 import { PipeMgr } from './PipeMgr'
-import { GlobalData } from './GlobalData'
+import { AudioData, GlobalData } from './GlobalData'
+import { AudioMgr } from './AudioMgr'
 const { ccclass, property } = _decorator
 
 enum EFailType {
@@ -52,12 +53,11 @@ export class GameCtrl extends Component {
 
   update(deltaTime: number) {
     if (GlobalData.isStart) {
-      // 碰撞检测
-      if (this.ground.collisionCheck(this.bird)) {
-        this.handleFail(EFailType.GROUND)
-      }
       if (this.pipeMgr.collisionCheck(this.bird)) {
         this.handleFail(EFailType.PIPE)
+      }
+      if (this.ground.collisionCheck(this.bird)) {
+        this.handleFail(EFailType.GROUND)
       }
     }
   }
@@ -72,6 +72,7 @@ export class GameCtrl extends Component {
   handleFail(failType: EFailType) {
     console.log('handleFail')
     GlobalData.isStart = false
+    AudioMgr.instance.playOneShot(AudioData.hit)
     UIMgr.instance.open(EndScreen as any, {
       onRestart: () => {
         this.resetGame()
