@@ -1,4 +1,4 @@
-import { _decorator, Component, Node } from 'cc'
+import { _decorator, Component, Node, Vec3 } from 'cc'
 import { AudioData, GlobalData } from './GlobalData'
 import { AudioMgr } from './AudioMgr'
 const { ccclass, property } = _decorator
@@ -15,11 +15,7 @@ export class Bird extends Component {
 
   update(deltaTime: number) {
     if (GlobalData.isStart) {
-      // 下落
-      this.vy = this.vy + this.gravity * deltaTime
-      const dy = this.vy * deltaTime
-      const newY = this.node.position.y + dy
-      this.node.setPosition(this.node.position.x, newY, this.node.position.z)
+      this.fallDown(deltaTime)
     }
   }
 
@@ -33,15 +29,36 @@ export class Bird extends Component {
     this.node.setPosition(this.node.position.x, y + this.node.height / 2, this.node.position.z)
   }
 
+  setVY(vy: number) {
+    this.vy = vy
+    // 控制鸟的旋转
+    // 根据vy设置 rotation
+    const angle = (Math.atan(vy / 550) * 120) / Math.PI
+    if (vy > 0) {
+      this.node.eulerAngles = new Vec3(0, 0, angle)
+    } else if (vy === 0) {
+      this.node.eulerAngles = new Vec3(0, 0, 0)
+    } else {
+      this.node.eulerAngles = new Vec3(0, 0, angle)
+    }
+  }
+
   reset() {
-    this.vy = 0
+    this.setVY(0)
     // @ts-ignore
     this.node.setPosition(...birdDefaultPosition)
   }
 
   // 上升 跳跃
   flyUp() {
-    this.vy = 550
+    this.setVY(550)
     AudioMgr.instance.playOneShot(AudioData.swoosh)
+  }
+
+  fallDown(deltaTime) {
+    this.setVY(this.vy + this.gravity * deltaTime)
+    const dy = this.vy * deltaTime
+    const newY = this.node.position.y + dy
+    this.node.setPosition(this.node.position.x, newY, this.node.position.z)
   }
 }
